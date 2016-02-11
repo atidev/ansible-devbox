@@ -10,21 +10,68 @@ Requirements
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```yaml
+# default user for devbox
+devbox_user: vagrant
 
-Dependencies
-------------
+# default group
+devbox_group: vagrant
 
-https://github.com/atidev/ansible-lxc
+# update apt cache before installing packages
+apt_update_cache: yes
+
+# extra apt repos to install packages
+apt_repos:
+  - ppa:pi-rho/dev
+
+# apt packages for installing
+apt_packages:
+  - unzip
+  - git
+  - mercurial
+  - python-pip
+  - python-dev
+  - python3
+  - python3-dev
+  - supervisor
+  - vim
+  - nginx
+  - tmux
+  - rsync
+  - ngrok-client
+
+# python packages installed syste-mwide
+pip_packages:
+  - ansible
+  - tox
+  - nodeenv
+  - devpi-web
+  - devpi-server
+  - httpie
+  - ipython
+
+# directory for local devpi cache
+devpi_cache_dir: /srv/devpi
+
+# port for nginx in dev mode
+devbox_nginx_port: 8888
+
+# root directory for webserver's static files
+devbox_nginx_root: /srv/www/
+```
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yaml
+- name: Devbox test playbook
+  hosts: dev-vm
+  vars:
+    apt_update_cache: no
+  roles:
+    - devbox
+```
 
 License
 -------
@@ -35,4 +82,5 @@ Author Information
 ------------------
 
 Arthur Orlov
+
 ati.su

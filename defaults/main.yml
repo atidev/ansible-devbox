@@ -1,13 +1,18 @@
 ---
-# defaults file for devbox
+# default user for devbox
 devbox_user: vagrant
+
+# default group
 devbox_group: vagrant
 
+# update apt cache before installing packages
 apt_update_cache: yes
 
+# extra apt repos to install packages
 apt_repos:
   - ppa:pi-rho/dev
 
+# apt packages for installing
 apt_packages:
   - unzip
   - git
@@ -23,6 +28,7 @@ apt_packages:
   - rsync
   - ngrok-client
 
+# python packages installed syste-mwide
 pip_packages:
   - ansible
   - tox
@@ -32,7 +38,11 @@ pip_packages:
   - httpie
   - ipython
 
+# directory for local devpi cache
 devpi_cache_dir: /srv/devpi
 
+# port for nginx in dev mode
 devbox_nginx_port: 8888
+
+# root directory for webserver's static files
 devbox_nginx_root: /srv/www/
