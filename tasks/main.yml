@@ -1,0 +1,49 @@
+---
+# tasks file for devbox
+- name: add apt repos
+  apt_repository: repo={{item}}
+  with_items: "{{apt_repos}}"
+
+- name: install system packages
+  apt: name={{item}} state=latest update_cache={{apt_update_cache}}
+  with_items: "{{apt_packages}}"
+
+- name: update pip
+  pip: name=pip state=latest
+
+- name: install python packages
+  pip: name={{item}} state=present
+  with_items: "{{pip_packages}}"
+
+- name: create devpi cache dir
+  file: path={{devpi_cache_dir}} state=directory owner=vagrant group=vagrant
+
+- name: upload supervisor conf for devpi
+  template: src=templates/devpi.conf dest=/etc/supervisor/conf.d/devpi.conf
+  notify: update supervisord
+
+- name: enable local devpi for pip
+  template: src=templates/pip.conf dest=/etc/pip.conf
+
+- name: enable local devpi for easy_install to vagrant user
+  template:
+      src: templates/pydistutils.cfg
+      dest: /home/{{devbox_user}}/.pydistutils.cfg
+      owner: "{{devbox_user}}"
+      group: "{{devbox_group}}"
+
+- name: enable local devpi for easy_install to root
+  template:
+      src: templates/pydistutils.cfg
+      dest: /root/.pydistutils.cfg
+
+- name: create webserver dir
+  file: path={{devbox_nginx_root}} state=directory
+
+- name: remove default nginx server
+  file: path=/etc/nginx/sites-enabled/default state=absent
+  notify: restart nginx
+
+- name: upload custom nginx config
+  template: src=templates/nginx.conf dest=/etc/nginx/sites-enabled/devbox.conf
+  notify: restart nginx

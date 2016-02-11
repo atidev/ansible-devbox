@@ -1,0 +1,6 @@
+- name: Devbox test playbook
+  hosts: all
+  vars:
+    apt_update_cache: no
+  roles:
+    - devbox

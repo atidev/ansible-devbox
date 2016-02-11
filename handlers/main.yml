@@ -1,0 +1,7 @@
+---
+# handlers file for devbox
+- name: update supervisord
+  command: supervisorctl update
+
+- name: restart nginx
+  service: name=nginx state=restarted
