@@ -28,7 +28,7 @@ apt_packages:
   - rsync
   - ngrok-client
 
-# python packages installed syste-mwide
+# python packages installed systemwide
 pip_packages:
   - ansible
   - tox
