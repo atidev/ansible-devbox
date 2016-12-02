@@ -40,6 +40,7 @@ pip_packages:
 
 # directory for local devpi cache
 devpi_cache_dir: /srv/devpi
+devpi_default_repo: root/pypi
 
 # port for nginx in dev mode
 devbox_nginx_port: 8888
